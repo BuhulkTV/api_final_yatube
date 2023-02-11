@@ -43,7 +43,7 @@ class FollowViewSet(mixins.CreateModelMixin,
                     ):
     """ViewSet модели Follow."""
 
-    queryset = Follow.objects.all()
+    queryset = Follow.objects.select_related('user', 'foolowing').all()
     serializer_class = FollowSerializer
     permission_classes = (IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
