@@ -22,13 +22,13 @@ class CommentSerializer(serializers.ModelSerializer):
     """Serializer для CommentViewSet."""
 
     author = SlugRelatedField(slug_field='username', read_only=True)
-    post = SlugRelatedField(slug_field='pk', read_only=True)
 
     class Meta:
         """Fields заполнены по принципу: Явное лучше, чем неявное."""
 
         model = Comment
         fields = ('id', 'author', 'text', 'created', 'post')
+        read_only_fields = ('post',)
 
 
 class GroupSerializer(serializers.ModelSerializer):

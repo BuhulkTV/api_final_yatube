@@ -1,5 +1,6 @@
-from django.contrib.auth import get_user_model
 from django.db import models
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
 User = get_user_model()
 
@@ -38,7 +39,7 @@ class Post(models.Model):
     )
 
     def __str__(self):
-        return self.text
+        return self.text[:settings.TEXT_LEN_IN_POST]
 
 
 class Comment(models.Model):
@@ -58,6 +59,12 @@ class Comment(models.Model):
         auto_now_add=True,
         db_index=True
     )
+
+    class Meta:
+        ordering = ['-created', ]
+
+    def __str__(self):
+        return f'Комментарий {self.author} для поста {self.post}'
 
 
 class Follow(models.Model):
